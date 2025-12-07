@@ -31,7 +31,9 @@ Thumbs.db
 dist/
 build/
 *.egg-info/
-ssh-keygen*
+
+# SSH Keys (Security)
 ssh-keygen*
 id_ed25519*
-id_ed25519*
+*.pem
+*.key
