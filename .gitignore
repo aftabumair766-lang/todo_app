@@ -33,3 +33,4 @@ build/
 *.egg-info/
 ssh-keygen*
 ssh-keygen*
+id_ed25519*
