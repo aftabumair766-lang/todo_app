@@ -1,6 +1,6 @@
-# Todo In-Memory Python Console App
+# Todo In-Memory Python Console App 🎨
 
-A simple, lightweight command-line Todo application built with Python. This Phase I implementation focuses on core CRUD operations with all data stored in memory.
+A beautiful, colorful command-line Todo application built with Python. This Phase I implementation focuses on core CRUD operations with all data stored in memory, featuring a vibrant interface with colors and emojis!
 
 ## Two Implementations Available
 
@@ -11,19 +11,20 @@ This project includes **two versions** for learning purposes:
 
 ## Features
 
-- **Add Tasks**: Create new tasks with title and description
-- **View Tasks**: Display all tasks with their current status
-- **Update Tasks**: Modify task details
-- **Delete Tasks**: Remove tasks by ID
-- **Mark Complete**: Toggle task completion status
-- **Task Summary**: View statistics (agent version only)
-- **Clean CLI Interface**: Simple numbered menu for easy navigation
+- ✅ **Add Tasks**: Create new tasks with title and description
+- 📋 **View Tasks**: Display all tasks with their current status
+- ✏️ **Update Tasks**: Modify task details
+- 🗑️ **Delete Tasks**: Remove tasks by ID
+- ✅ **Mark Complete**: Toggle task completion status with visual indicators
+- 📊 **Task Summary**: View statistics with progress bar (agent version only)
+- 🎨 **Colorful Interface**: Beautiful colors, emojis, and formatted output
+- 🎯 **Clean CLI**: Simple numbered menu for easy navigation
 
 ## Requirements
 
 - Python 3.12 or higher
 - WSL/Linux environment (or any Unix-like system)
-- No external dependencies required
+- **colorama** - For colorful terminal output (installed automatically)
 
 ## Project Structure
 
@@ -34,6 +35,7 @@ todo-app/
 │   ├── main_v2.py           # Agent-based architecture version
 │   ├── models.py            # Task data model (for agent version)
 │   ├── storage.py           # Task storage management (for agent version)
+│   ├── colors.py            # 🎨 Color utilities and formatting
 │   └── agents/              # Specialized agent modules
 │       ├── __init__.py
 │       ├── base_agent.py
@@ -45,6 +47,7 @@ todo-app/
 ├── specs_history/
 │   ├── initial_spec.md      # Original specification
 │   └── agent_architecture_spec.md  # Agent architecture documentation
+├── requirements.txt         # Python dependencies
 ├── constitution.md          # Project guidelines
 ├── README.md                # This file
 └── CLAUDE.md                # Instructions for Claude Code
@@ -70,7 +73,17 @@ source .venv/bin/activate
 
 You should see `(.venv)` prefix in your terminal prompt indicating the virtual environment is active.
 
-### Step 3: Verify Python Version
+### Step 3: Install Dependencies
+
+```bash
+# Install colorama and other dependencies
+pip install -r requirements.txt
+```
+
+This will install:
+- **colorama** (0.4.6) - For beautiful colorful output 🎨
+
+### Step 4: Verify Python Version
 
 ```bash
 python --version

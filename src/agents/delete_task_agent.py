@@ -5,7 +5,10 @@ Delete Task Agent - Handles task deletion operations.
 This agent is responsible for removing tasks from storage.
 """
 
-from .base_agent import BaseAgent
+try:
+    from .base_agent import BaseAgent
+except ImportError:
+    from agents.base_agent import BaseAgent
 
 
 class DeleteTaskAgent(BaseAgent):

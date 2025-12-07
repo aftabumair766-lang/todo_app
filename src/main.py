@@ -1,11 +1,18 @@
 #!/usr/bin/env python3
 """
 Todo In-Memory Console Application
-Phase I - Core CRUD Operations
+Phase I - Core CRUD Operations with Colorful Interface
 
 This module provides a simple command-line interface for managing tasks.
 All data is stored in memory and will be lost when the program exits.
 """
+
+from colors import (
+    Colors, Emojis, print_header, print_success, print_error,
+    print_task, print_welcome, print_goodbye, print_menu_option,
+    print_divider, print_info, print_title
+)
+
 
 class Task:
     """
@@ -61,7 +68,7 @@ def add_task(title, description=""):
 
     # Validate title
     if not title or not title.strip():
-        print("Error: Title cannot be empty.")
+        print_error("Title cannot be empty.")
         return None
 
     # Create and add the task
@@ -69,7 +76,7 @@ def add_task(title, description=""):
     tasks.append(task)
     next_id += 1
 
-    print(f"\nTask added successfully! (ID: {task.id})")
+    print_success(f"Task added successfully! (ID: {task.id})")
     return task
 
 
@@ -86,10 +93,10 @@ def delete_task(task_id):
     for i, task in enumerate(tasks):
         if task.id == task_id:
             deleted_task = tasks.pop(i)
-            print(f"\nTask '{deleted_task.title}' (ID: {task_id}) deleted successfully!")
+            print_success(f"Task '{deleted_task.title}' (ID: {task_id}) deleted successfully!")
             return True
 
-    print(f"\nError: Task with ID {task_id} not found.")
+    print_error(f"Task with ID {task_id} not found.")
     return False
 
 
@@ -107,7 +114,7 @@ def update_task(task_id, new_title=None, new_description=None):
     """
     # Validate that at least one field is provided
     if new_title is None and new_description is None:
-        print("Error: Please provide at least one field to update (title or description).")
+        print_error("Please provide at least one field to update (title or description).")
         return None
 
     # Find and update the task
@@ -118,11 +125,11 @@ def update_task(task_id, new_title=None, new_description=None):
             if new_description is not None:
                 task.description = new_description.strip()
 
-            print(f"\nTask (ID: {task_id}) updated successfully!")
-            print(task)
+            print_success(f"Task (ID: {task_id}) updated successfully!")
+            print_task(task)
             return task
 
-    print(f"\nError: Task with ID {task_id} not found.")
+    print_error(f"Task with ID {task_id} not found.")
     return None
 
 
@@ -133,16 +140,13 @@ def list_tasks():
     If no tasks exist, displays a message indicating the list is empty.
     """
     if not tasks:
-        print("\nNo tasks found. Your todo list is empty!")
+        print_info("No tasks found. Your todo list is empty!")
         return
 
-    print(f"\n{'='*50}")
-    print(f"TOTAL TASKS: {len(tasks)}")
-    print(f"{'='*50}")
+    print_header(f"📋 ALL TASKS ({len(tasks)} total)", Colors.INFO)
 
     for task in tasks:
-        print(f"\n{task}")
-        print("-" * 50)
+        print_task(task)
 
 
 def mark_complete(task_id):
@@ -159,25 +163,24 @@ def mark_complete(task_id):
         if task.id == task_id:
             task.completed = not task.completed
             status = "complete" if task.completed else "incomplete"
-            print(f"\nTask '{task.title}' (ID: {task_id}) marked as {status}!")
+            emoji = Emojis.DONE if task.completed else Emojis.TODO
+            print_success(f"{emoji} Task '{task.title}' (ID: {task_id}) marked as {status}!")
             return task
 
-    print(f"\nError: Task with ID {task_id} not found.")
+    print_error(f"Task with ID {task_id} not found.")
     return None
 
 
 def display_menu():
     """Display the main menu options."""
-    print("\n" + "=" * 50)
-    print("TODO APP - MAIN MENU")
-    print("=" * 50)
-    print("1. Add Task")
-    print("2. View All Tasks")
-    print("3. Update Task")
-    print("4. Delete Task")
-    print("5. Mark Task Complete/Incomplete")
-    print("6. Exit")
-    print("=" * 50)
+    print_header("🎯 TODO APP - MAIN MENU", Colors.PRIMARY)
+    print_menu_option(1, Emojis.ADD, "Add Task")
+    print_menu_option(2, Emojis.VIEW, "View All Tasks")
+    print_menu_option(3, Emojis.UPDATE, "Update Task")
+    print_menu_option(4, Emojis.DELETE, "Delete Task")
+    print_menu_option(5, Emojis.COMPLETE, "Mark Task Complete/Incomplete")
+    print_menu_option(6, Emojis.EXIT, "Exit")
+    print_divider("━", 60, Colors.PRIMARY)
 
 
 def get_int_input(prompt):
@@ -191,9 +194,9 @@ def get_int_input(prompt):
         int: The validated integer input, or None if invalid
     """
     try:
-        return int(input(prompt))
+        return int(input(f"{Colors.HIGHLIGHT}{prompt}{Colors.RESET}"))
     except ValueError:
-        print("Error: Please enter a valid number.")
+        print_error("Please enter a valid number.")
         return None
 
 
@@ -203,34 +206,31 @@ def main():
 
     Displays the menu and processes user choices until exit is selected.
     """
-    print("\n" + "=" * 50)
-    print("WELCOME TO TODO APP - PHASE I")
-    print("=" * 50)
+    print_welcome()
 
     while True:
         display_menu()
-        choice = input("\nEnter your choice (1-6): ").strip()
+        choice = input(f"\n{Colors.PRIMARY}Enter your choice (1-6): {Colors.RESET}").strip()
 
         if choice == "1":
             # Add Task
-            print("\n--- ADD NEW TASK ---")
-            title = input("Enter task title: ").strip()
-            description = input("Enter task description (optional): ").strip()
+            print_title(f"\n{Emojis.ADD} ADD NEW TASK", Colors.SUCCESS)
+            title = input(f"{Colors.HIGHLIGHT}Enter task title: {Colors.RESET}").strip()
+            description = input(f"{Colors.HIGHLIGHT}Enter task description (optional): {Colors.RESET}").strip()
             add_task(title, description)
 
         elif choice == "2":
             # View All Tasks
-            print("\n--- ALL TASKS ---")
             list_tasks()
 
         elif choice == "3":
             # Update Task
-            print("\n--- UPDATE TASK ---")
+            print_title(f"\n{Emojis.UPDATE} UPDATE TASK", Colors.WARNING)
             task_id = get_int_input("Enter task ID to update: ")
             if task_id is not None:
-                print("Leave blank to keep current value.")
-                new_title = input("Enter new title (or press Enter to skip): ").strip()
-                new_description = input("Enter new description (or press Enter to skip): ").strip()
+                print_info("Leave blank to keep current value.")
+                new_title = input(f"{Colors.HIGHLIGHT}Enter new title (or press Enter to skip): {Colors.RESET}").strip()
+                new_description = input(f"{Colors.HIGHLIGHT}Enter new description (or press Enter to skip): {Colors.RESET}").strip()
 
                 # Convert empty strings to None
                 new_title = new_title if new_title else None
@@ -240,25 +240,25 @@ def main():
 
         elif choice == "4":
             # Delete Task
-            print("\n--- DELETE TASK ---")
+            print_title(f"\n{Emojis.DELETE} DELETE TASK", Colors.ERROR)
             task_id = get_int_input("Enter task ID to delete: ")
             if task_id is not None:
                 delete_task(task_id)
 
         elif choice == "5":
             # Mark Complete/Incomplete
-            print("\n--- MARK TASK COMPLETE/INCOMPLETE ---")
+            print_title(f"\n{Emojis.COMPLETE} MARK TASK COMPLETE/INCOMPLETE", Colors.INFO)
             task_id = get_int_input("Enter task ID: ")
             if task_id is not None:
                 mark_complete(task_id)
 
         elif choice == "6":
             # Exit
-            print("\nThank you for using Todo App! Goodbye!")
+            print_goodbye()
             break
 
         else:
-            print("\nError: Invalid choice. Please enter a number between 1 and 6.")
+            print_error("Invalid choice. Please enter a number between 1 and 6.")
 
 
 if __name__ == "__main__":

@@ -5,7 +5,10 @@ Mark Complete Agent - Handles task completion status operations.
 This agent is responsible for toggling task completion status.
 """
 
-from .base_agent import BaseAgent
+try:
+    from .base_agent import BaseAgent
+except ImportError:
+    from agents.base_agent import BaseAgent
 
 
 class MarkCompleteAgent(BaseAgent):

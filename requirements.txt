@@ -1,0 +1,5 @@
+# Todo App - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Colorama - Cross-platform colored terminal output
+colorama==0.4.6

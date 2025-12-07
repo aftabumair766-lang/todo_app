@@ -5,8 +5,12 @@ Add Task Agent - Handles task creation operations.
 This agent is responsible for creating and adding new tasks to the storage.
 """
 
-from .base_agent import BaseAgent
-from ..models import Task
+try:
+    from .base_agent import BaseAgent
+    from ..models import Task
+except ImportError:
+    from agents.base_agent import BaseAgent
+    from models import Task
 
 
 class AddTaskAgent(BaseAgent):

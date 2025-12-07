@@ -5,7 +5,10 @@ Update Task Agent - Handles task modification operations.
 This agent is responsible for updating task details.
 """
 
-from .base_agent import BaseAgent
+try:
+    from .base_agent import BaseAgent
+except ImportError:
+    from agents.base_agent import BaseAgent
 
 
 class UpdateTaskAgent(BaseAgent):

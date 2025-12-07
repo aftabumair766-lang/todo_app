@@ -5,7 +5,10 @@ List Task Agent - Handles task listing and display operations.
 This agent is responsible for retrieving and formatting task lists.
 """
 
-from .base_agent import BaseAgent
+try:
+    from .base_agent import BaseAgent
+except ImportError:
+    from agents.base_agent import BaseAgent
 
 
 class ListTaskAgent(BaseAgent):
