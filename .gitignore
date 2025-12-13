@@ -35,5 +35,24 @@ build/
 # SSH Keys (Security)
 ssh-keygen*
 id_ed25519*
+id_rsa*
 *.pem
 *.key
+
+# Environment Variables & Secrets
+.env
+.env.*
+!.env.example
+*.secret
+secrets.py
+config_secret.py
+credentials.json
+credentials.txt
+
+# API Keys & Tokens
+*apikey*
+*api_key*
+*api-key*
+*token*
+*secret*
+!requirements.txt
